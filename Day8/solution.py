@@ -76,7 +76,7 @@ def solution2():
             if len(rStack) == 0:
                 see[i][j] *= (len(data[i]) - 1 - j)
             else:
-                see[i][j] *= abs(len(data[i]) - 1 - rStack[-1] - (len(data[i]) - 1 - j))   
+                see[i][j] *= abs(len(data[i]) - 1 - rStack[-1] - len(data[i]) - 1 - j)   
             rStack.append(j) 
             
             while len(cStacks[j]) > 0 and int(data[cStacks[j][-1]][j]) < curr:
