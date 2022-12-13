@@ -42,7 +42,6 @@ def solution(rounds=20, worryDivisor = 1):
     monkey = None
     for x in data:
         s = x.split()
-        #print(s)
         if len(s) == 0:
             continue
         
