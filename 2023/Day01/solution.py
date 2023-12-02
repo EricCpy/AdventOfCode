@@ -1,5 +1,3 @@
-
-#Time O(n) Space O(1)
 def solution_1():
     with open('./Day01/input.txt', 'r') as f:
         data = f.read().splitlines()
