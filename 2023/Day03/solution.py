@@ -1,5 +1,3 @@
-import re
-
 def solution_1():
     with open('./Day03/input.txt', 'r') as f:
         data = f.read().splitlines()
