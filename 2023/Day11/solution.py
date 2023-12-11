@@ -1,8 +1,5 @@
 import copy
 
-N, S, E, W = (-1, 0), (1, 0), (0, 1), (0, -1)
-d = {'|': (N, S), '-': (E, W), 'L': (N, E), 'J': (N, W), '7': (S, W), 'F': (S, E), '.': ()}
-
 def solution():
     with open('./Day11/input.txt', 'r') as f:
         data = f.read().splitlines()
@@ -17,7 +14,6 @@ def solution():
                 r = False
 
         if r:
-            print(i)
             expanded_data.insert(i + len(expanded_data) - len(data), "".join(['.' for _ in range(len(data))]))
     
     for i in range(len(expanded_data)):
@@ -27,8 +23,17 @@ def solution():
                 expanded_data[i] = expanded_data[i][:j+c] + '.' + expanded_data[i][j+c:]
                 c += 1
               
-    galaxies = []   
-    # manhattan dist zwischen allen berechnen
+    galaxies = []
+    for i, x in enumerate(expanded_data):
+        for j, y in enumerate(x):
+            if y == '#':
+                galaxies.append((i, j))
+    
+    ans = 0
+    for i in range(len(galaxies)-1):
+        for j in range(i, len(galaxies)):
+            ans += abs(galaxies[i][0] - galaxies[j][0]) + abs(galaxies[i][1] - galaxies[j][1])
+    return ans
 
 if __name__ == "__main__":
     print(solution())
