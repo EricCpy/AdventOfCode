@@ -9,26 +9,30 @@ def solution():
         for i,y in enumerate(x):
             stones[i].append(y)
 
-    stones = rotate_field(stones)
-    stones = rotate_field(stones)
-    
     arr = []
-    arr_set = set() 
-
+    arr_set = dict() 
+    c = 1000000000
+    start = 0
     for _ in range(1000000000):
         for i in range(4):
-            stones = roll_stones(stones)
+            stones = roll_stones(stones)   
             stones = rotate_field(stones)
-        
+             
+
         special_load = calc_special_load(stones)
-        if special_load in arr_set:
-            break
-        else:
-            load = calc_load(stones)
-            arr.append(load)
-            arr_set.add(special_load)    
+        load = calc_load(stones)
         
-    return arr[ 1000000000 % len(arr) ]                    
+
+        if special_load in arr_set:
+            start = arr.index(arr_set[special_load])
+            arr = arr[arr.index(arr_set[special_load]):]
+            break
+        arr.append(load)
+        arr_set[special_load] = load  
+  
+    print(len(arr))
+    print((c - start) % len(arr))
+    return arr[ (c - start) % len(arr) ]                    
 
 def roll_stones(stones):
     for stone_row_idx, stone_row in enumerate(stones):
@@ -45,12 +49,7 @@ def roll_stones(stones):
     return stones
                 
 def rotate_field(stones):
-    nstones = [[] for x in range(len(stones))]
-    for x in stones:
-        for i,y in enumerate(x):
-            nstones[i].append(y)
-
-    return nstones
+    return np.rot90(np.array(stones), k=1).tolist()
     
 def calc_special_load(stones):
     ans = 0
@@ -72,6 +71,6 @@ def calc_load(stones):
     return ans    
      
      
-     
+import numpy as np 
 if __name__ == "__main__":
     print(solution())
