@@ -8,31 +8,27 @@ def solution():
     for x in data:
         for i,y in enumerate(x):
             stones[i].append(y)
-
+    
     arr = []
     arr_set = dict() 
     c = 1000000000
     start = 0
-    for _ in range(1000000000):
-        for i in range(4):
-            stones = roll_stones(stones)   
+    for i in range(1000000000):
+        for i in range(4):  
+            stones = roll_stones(stones) 
             stones = rotate_field(stones)
-             
 
-        special_load = calc_special_load(stones)
+        special_load = get_special_load(stones)
         load = calc_load(stones)
         
 
         if special_load in arr_set:
-            start = arr.index(arr_set[special_load])
-            arr = arr[arr.index(arr_set[special_load]):]
+            start = arr_set[special_load]
             break
         arr.append(load)
-        arr_set[special_load] = load  
+        arr_set[special_load] = i  
   
-    print(len(arr))
-    print((c - start) % len(arr))
-    return arr[ (c - start) % len(arr) ]                    
+    return arr[start + ((c - start) % (len(arr) - start)) ]                    
 
 def roll_stones(stones):
     for stone_row_idx, stone_row in enumerate(stones):
@@ -51,14 +47,12 @@ def roll_stones(stones):
 def rotate_field(stones):
     return np.rot90(np.array(stones), k=1).tolist()
     
-def calc_special_load(stones):
-    ans = 0
-    for stone_row_idx, stone_row in enumerate(stones):
-        for stone_idx, x in enumerate(stone_row):
-            if x == 'O':
-                ans += stone_idx + len(stones) * (stone_row_idx + 1)
+def get_special_load(stones):
+    s = ""
+    for stone_row in stones:
+        s += "".join(stone_row) 
     
-    return ans        
+    return s        
     
 
 def calc_load(stones):             
