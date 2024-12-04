@@ -33,21 +33,31 @@ def solution():
 
 
 def solution2():
-    
+    def search_word(data, x, y, dx, dy, word):
+        for i in range(len(word)):
+            nx, ny = x + dx * i, y + dy * i
+            if (
+                nx < 0 or nx >= len(data) or
+                ny < 0 or ny >= len(data[nx]) or
+                data[nx][ny] != word[i]
+            ):
+                return False
+            
+        return True
+
     with open('./Day04/input.txt', 'r') as f:
         data = f.read().splitlines()
 
-    search_word = "MAS"
     ans = 0
+    words = ["SAM", "MAS"]
 
-    
     for x in range(len(data)):
         for y in range(len(data[x])):
-            # check for diagonal mas, sam going down diagonal right
-            # check for x + 2 mas, sam going down diagonal left
-            pass
-    
-    
+            word1 = any(search_word(data, x, y, 1, 1, word) for word in words)
+            word2 = any(search_word(data, x, y + 2, 1, -1, word) for word in words)
+            if word1 and word2:
+                ans += 1
+
     return ans
 
 if __name__ == "__main__":
