@@ -1,5 +1,3 @@
-from collections import Counter
-
 def solution():
     with open('./Day08/input.txt', 'r') as f:
         data = f.read().splitlines()
